@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue Js</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+	<div id="root">
+			<div class="container">
+				<h1 class="fleft">List of Users</h1>
+				<button class="fright addnew" @click="showingAddModel = true;">Add New</button>
+				<div class="clear"></div>
+				<hr>
+
+				<p class="errorMessage" v-if="errorMessage">
+					{{errorMessage}}
+				</p>
+
+				<p class="successMessage" v-if="successMessage">
+					{{successMessage}}
+				</p>
+
+				<table class="list">
+					<tr>
+						<th>S/L</th>
+						<th>Username</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+
+					<tr v-for="(user, i) in users">
+						<td>{{i+1}}.</td>
+						<td>{{ user.username }}</td>
+						<td>{{ user.email }}</td>
+						<td>{{ user.mobile }}</td>
+						<td><button @click="showingEditModel = true; selectUser(user)">Edit</button></td>
+						<td><button @click="showingDeleteModel = true; selectUser(user)">Delete</button></td>
+					</tr>
+
+
+				</table>
+			</div>
+
+		<!-- Add New Use -->
+			<div class="modal" id="addModal" v-if="showingAddModel">
+				<div class="modalContainer">
+					<div class="modalHeading">
+						<p class="fleft">Add New User</p>
+						<button title="close tab" class="fright close" @click="showingAddModel = false;">X</button>
+						<div class="clear"></div>
+					</div>
+					<div class="modalContent">
+
+						<table class="form">
+							<tr>
+								<th>Username</th>
+								<th>:</th>
+								<td><input  type="text" name="" v-model="newUser.username"></td>
+							</tr>
+
+							<tr>
+								<th>Email</th>
+								<th>:</th>
+								<td><input type="text" name="" v-model="newUser.email"></td>
+							</tr>
+
+							<tr>
+								<th>Phone</th>
+								<th>:</th>
+								<td><input type="text" name="" v-model="newUser.mobile"></td>
+							</tr>
+
+							<tr>
+								<th></th>
+								<th></th>
+								<td><button @click="showingAddModel = false; saveUser();">Save</button></td>
+							</tr>
+						</table>
+						
+					</div>
+				</div>
+			</div>
+
+		<!-- Edit User -->
+
+			<div class="modal" id="editModal" v-if="showingEditModel">
+				<div class="modalContainer">
+					<div class="modalHeading">
+						<p class="fleft">Edit User</p>
+						<button class="fright close" @click="showingEditModel = false; autorefresh();">X</button>
+						<div class="clear"></div>
+					</div>
+					<div class="modalContent">
+
+						<table class="form">
+							<tr>
+								<th>Username</th>
+								<th>:</th>
+								<td><input  type="text" name="" v-model="clickedUser.username"></td>
+							</tr>
+
+							<tr>
+								<th>Email</th>
+								<th>:</th>
+								<td><input type="text" name="" v-model="clickedUser.email"></td>
+							</tr>
+
+							<tr>
+								<th>Phone</th>
+								<th>:</th>
+								<td><input type="text" name="" v-model="clickedUser.mobile"></td>
+							</tr>
+
+							<tr>
+								<th></th>
+								<th></th>
+								<td><button @click="showingEditModel = false; updateUser();">Update</button></td>
+							</tr>
+						</table>
+						
+					</div>
+				</div>
+			</div>
+
+			<!-- Delete User -->
+
+			<div class="modal" id="deleteModal" v-if="showingDeleteModel">
+				<div class="modalContainer">
+					<div class="modalHeading">
+						<p class="fleft">Are You sure to Delete? </p>
+						<button class="fright close" @click="showingDeleteModel = false;">X</button>
+						<div class="clear"></div>
+					</div>
+					<div class="modalContent">
+
+						<p>You are going to delete  <b>"{{ clickedUser.username }}"</b> ?</p>
+						<br><br><br><br>
+						<button  @click="showingDeleteModel = false; deleteUser();">Yes</button>
+						<button  @click="showingDeleteModel = false;">No</button>
+						
+						
+					</div>
+				</div>
+			</div>
+
+
+	</div>
+
+
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/javascript" src="axios.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
+
+
+</body>
+</html>
